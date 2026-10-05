@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block public %}
+<div class="auth-page"><div class="auth-card"><div class="brand center"><span class="brand-heart">♥</span><div><b>MediDesk</b><small>Secure Clinic Management</small></div></div><h1>Welcome back</h1><p class="muted">Sign in to continue to your secure dashboard.</p><form method="post" class="form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Email<input type="email" name="email" required autocomplete="email"></label><label>Password<input type="password" name="password" required autocomplete="current-password"></label><button class="btn primary full">Sign in</button></form><p class="muted center">New patient? <a href="{{ url_for('register') }}">Create account</a></p><div class="demo-note"><b>Demo accounts</b><br>patient@medidesk.local<br>doctor@medidesk.local<br>admin@medidesk.local<br><small>Password: Demo@12345</small></div></div></div>
+{% endblock %}

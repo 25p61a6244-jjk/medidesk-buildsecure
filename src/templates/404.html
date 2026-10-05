@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block public %}
+<div class="error-page"><div class="error-card"><div class="error-code">404</div><h1>Page not found</h1><p>The requested MediDesk resource does not exist or is no longer available.</p><a class="btn primary" href="{{ url_for('dashboard') if current_user else url_for('index') }}">Return to MediDesk</a></div></div>
+{% endblock %}

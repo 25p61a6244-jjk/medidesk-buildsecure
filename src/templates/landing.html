@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block public %}
+<div class="landing">
+  <div class="landing-nav"><div class="brand"><span class="brand-heart">♥</span><div><b>MediDesk</b><small>Secure Clinic Management</small></div></div><a class="btn secondary" href="{{ url_for('login') }}">Sign in</a></div>
+  <section class="hero">
+    <div class="hero-copy"><span class="eyebrow">PS-04 • HEALTHTECH</span><h1>Better appointments.<br><span>Safer patient access.</span></h1><p>A secure clinic management platform for patients, doctors and administrators.</p><div class="hero-actions"><a class="btn primary" href="{{ url_for('register') }}">Create patient account</a><a class="btn secondary" href="{{ url_for('login') }}">Demo login</a></div></div>
+    <div class="hero-card"><div class="heart-large">♥</div><h2>Care, connected.</h2><p>Book • Manage • Records • Audit</p><div class="mini-stats"><div><b>3</b><span>Roles</span></div><div><b>9</b><span>PS features</span></div><div><b>5MB</b><span>Upload limit</span></div></div></div>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block public %}
+<div class="auth-page"><div class="auth-card"><div class="brand center"><span class="brand-heart">♥</span><div><b>MediDesk</b><small>Secure Clinic Management</small></div></div><h1>Create patient account</h1><p class="muted">Use synthetic information for this hackathon demo.</p><form method="post" class="form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Full name<input name="name" required maxlength="120"></label><label>Email<input type="email" name="email" required></label><label>Password<input type="password" name="password" required minlength="8"></label><button class="btn primary full">Register</button></form><p class="muted center">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p></div></div>
+{% endblock %}

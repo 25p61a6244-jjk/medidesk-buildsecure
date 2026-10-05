@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block public %}
+<div class="error-page"><div class="error-card"><div class="error-code">403</div><h1>Access denied</h1><p>Your current role does not have permission to access this resource. MediDesk enforces authorization on the server for every protected workflow.</p><a class="btn primary" href="{{ url_for('dashboard') if current_user else url_for('login') }}">Return to workspace</a></div></div>
+{% endblock %}
