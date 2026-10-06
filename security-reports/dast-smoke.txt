@@ -1,0 +1,3 @@
+DAST smoke checks: [True, True, True, True]
+
+INFO:medidesk:MediDesk started with database=sqlite

@@ -1,0 +1,1 @@
+"""MediDesk application package."""

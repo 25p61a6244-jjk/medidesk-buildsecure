@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071b35"><meta name="description" content="MediDesk secure clinic and appointment management platform"><meta name="csrf-token" content="{{ csrf_token() }}">
+<title>MediDesk{% if title %} — {{ title }}{% endif %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+{% if current_user and request.endpoint not in ['security', 'faq', 'contact', 'doctors'] %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <div>
+      <div class="brand brand-sidebar"><span class="brand-mark"><span class="brand-cross"></span></span><div><b>MediDesk</b><small>Secure Clinic Platform</small></div></div>
+      <div class="role-switcher"><span class="role-dot"></span><span>{{ current_user.role|capitalize }} workspace</span></div>
+      <nav class="nav-groups">
+        <div class="nav-label">WORKSPACE</div>
+        <a href="{{ url_for('dashboard') }}" class="nav-item"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+        {% if current_user.role == 'patient' %}
+          <a href="{{ url_for('patient_dashboard') }}#appointments" class="nav-item"><span class="nav-icon">▣</span><span>Appointments</span></a>
+          <a href="{{ url_for('patient_dashboard') }}#history" class="nav-item"><span class="nav-icon">◷</span><span>Appointment History</span></a>
+          <a href="{{ url_for('patient_dashboard') }}#records" class="nav-item"><span class="nav-icon">▤</span><span>Medical Records</span></a>
+          <a href="{{ url_for('patient_dashboard') }}#profile" class="nav-item"><span class="nav-icon">♙</span><span>My Profile</span></a>
+        {% elif current_user.role == 'doctor' %}
+          <a href="{{ url_for('doctor_dashboard') }}#appointments" class="nav-item"><span class="nav-icon">▣</span><span>Schedule</span></a>
+          <a href="{{ url_for('doctor_dashboard') }}#patients" class="nav-item"><span class="nav-icon">♙</span><span>Assigned Patients</span></a>
+          <a href="{{ url_for('doctor_dashboard') }}#records" class="nav-item"><span class="nav-icon">▤</span><span>Medical Records</span></a>
+        {% else %}
+          <a href="{{ url_for('admin_dashboard') }}#users" class="nav-item"><span class="nav-icon">♙</span><span>User Management</span></a>
+          <a href="{{ url_for('admin_dashboard') }}#appointments" class="nav-item"><span class="nav-icon">▣</span><span>Appointments</span></a>
+          <a href="{{ url_for('admin_dashboard') }}#contacts" class="nav-item"><span class="nav-icon">✉</span><span>Contact Messages</span></a>
+          <a href="{{ url_for('admin_dashboard') }}#audit" class="nav-item"><span class="nav-icon">◉</span><span>Security & Audit</span></a>
+        {% endif %}
+        <div class="nav-label nav-label-spaced">SUPPORT</div>
+        <a href="{{ url_for('notifications') }}" class="nav-item"><span class="nav-icon">♢</span><span>Notifications{% if unread_notifications %}<em class="nav-count">{{ unread_notifications }}</em>{% endif %}</span></a>
+        <a href="{{ url_for('security') }}" class="nav-item"><span class="nav-icon">◆</span><span>Security Center</span></a>
+        <a href="{{ url_for('faq') }}" class="nav-item"><span class="nav-icon">?</span><span>Help & FAQ</span></a>
+        <a href="{{ url_for('contact') }}" class="nav-item"><span class="nav-icon">✉</span><span>Contact Support</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="trust-card"><span class="trust-icon">✓</span><div><b>Protected session</b><small>RBAC · CSRF · secure headers</small></div></div>
+      <form method="post" action="{{ url_for('logout') }}" class="logout-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="logout" type="submit"><span>↪</span> Sign out</button></form>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="mobile-brand"><span class="brand-mark"><span class="brand-cross"></span></span><b>MediDesk</b></div><div class="topbar-right"><a class="notification-btn" href="{{ url_for('notifications') }}" aria-label="Notifications">♢{% if unread_notifications %}<span>{{ unread_notifications }}</span>{% endif %}</a><span class="top-security"><span class="status-dot"></span> Secure workspace</span><div class="user-chip"><span class="avatar">{{ current_user.name[:1]|upper }}</span><div><b>{{ current_user.name }}</b><small>{{ current_user.role|capitalize }}</small></div></div></div></header>
+    {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for cat,msg in messages %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<div class="ai-launcher" id="aiLauncher"><button type="button" class="ai-fab" aria-label="Open MediDesk AI">✦</button></div>
+<div class="ai-panel" id="aiPanel" aria-hidden="true"><div class="ai-head"><div><b>✦ MediDesk AI</b><small>Privacy-first clinic assistant</small></div><button type="button" id="aiClose">×</button></div><div class="ai-note">I can help with appointments, navigation, security and synthetic demo records. I do not diagnose or prescribe.</div><div class="ai-messages" id="aiMessages"><div class="ai-msg bot">Hi {{ current_user.name.split(' ')[0] }}! How can I help?</div></div><div class="ai-suggestions"><button data-ai="How do I book an appointment?">Book appointment</button><button data-ai="Who can see medical records?">Record access</button><button data-ai="How is MediDesk secured?">Security</button></div><form id="aiForm"><input id="aiInput" maxlength="1000" placeholder="Ask MediDesk AI..." autocomplete="off"><button>➤</button></form></div>
+{% else %}
+  {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack public">{% for cat,msg in messages %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+  {% block public %}{% endblock %}
+{% endif %}
+</body></html>

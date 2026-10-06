@@ -1,0 +1,17 @@
+# Build Secure 24 — Team Metadata
+# Team Composition Rule: Exactly 2 or 4 registered participants.
+
+team:
+  team_id: "15"
+  name: "Cyber Sentials"
+  repository: "" # GitHub repository URL — to be added before push
+
+members:
+  - name: "Ganta Swapnika"
+    email: "swapnika0902@gmail.com"
+  - name: "Challa Yeeshwanth"
+    email: "yeshaasrithchalla@gmail.com"
+  - name: "Bandaru Kusama"
+    email: "bandarukusama5@gmail.com"
+  - name: "Jakka Jaswanth"
+    email: "jaswanthkumarj355@gmail.com"
